@@ -1,0 +1,262 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  role      String   @default("STUDENT") // STUDENT, EDUCATOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  gradeLevel  Int?     // Grades 2-8
+
+  courses     Course[] @relation("EducatorCourses")
+  enrollments Enrollment[]
+  submissions Submission[]
+  profile     AccessibilityProfile?
+  interactions    StudentInteraction[]
+  tutorInteractions TutorInteraction[]
+  
+  progressRecords UserProgress[]
+  assessmentResults AssessmentResult[]
+  accessibilityLogs AccessibilityUsage[]
+}
+
+model AccessibilityProfile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  visualImpairment  Boolean  @default(false)
+  hearingImpairment Boolean  @default(false)
+  dyslexiaFriendly  Boolean  @default(false)
+  preferredVoice    String?
+  fontSize          String   @default("normal")
+  highContrast      Boolean  @default(false)
+  reducedMotion     Boolean  @default(false)
+}
+
+model Assignment {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  gradeLevel  Int      // Target Grade Level
+  dueDate     DateTime?
+  
+  submissions Submission[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Submission {
+  id           String     @id @default(uuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  assignmentId String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  
+  content      String?    // Text answer or URL to recording
+  score        Int?
+  feedback     String?
+  
+  submittedAt  DateTime   @default(now())
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  educatorId  String
+  educator    User     @relation("EducatorCourses", fields: [educatorId], references: [id])
+  modules     Module[]
+  students    Enrollment[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  aiModels    AiModel[] @relation("CourseAiModels")
+  datasets    Dataset[] @relation("CourseDatasets")
+  assessments Assessment[]
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model Module {
+  id        String    @id @default(uuid())
+  title     String
+  order     Int       @default(0)
+  courseId  String
+  course    Course    @relation(fields: [courseId], references: [id])
+  contents  Content[]
+  createdAt DateTime  @default(now())
+}
+
+model Content {
+  id              String   @id @default(uuid())
+  moduleId        String
+  module          Module   @relation(fields: [moduleId], references: [id])
+  title           String
+  originalText    String
+  simplifiedText  String?
+  audioUrl        String?
+  captionUrl      String?  @default("")
+  
+  status          String   @default("PENDING")
+  error           String?
+
+  type            String   @default("TEXT")
+  createdAt       DateTime @default(now())
+  
+  interactions    StudentInteraction[]
+}
+
+model StudentInteraction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  contentId String
+  content   Content  @relation(fields: [contentId], references: [id])
+  
+  type      String
+  duration  Int?
+  score     Int?
+  
+  timestamp DateTime @default(now())
+}
+
+// *** RESEARCH & ANALYTICS EXTENSIONS ***
+
+model AiModel {
+  id          String   @id @default(uuid())
+  name        String   // e.g. "GPT-4o", "MediaPipe Hands"
+  version     String   // e.g. "2024-05-13", "v0.10.14"
+  description String?
+  accuracy    Float?   // Self-reported or benchmarked accuracy on relevant tasks
+  
+  courses     Course[] @relation("CourseAiModels")
+  createdAt   DateTime @default(now())
+}
+
+model Dataset {
+  id          String   @id @default(uuid())
+  name        String   // e.g. "WLASL", "GSM8K"
+  sourceUrl   String
+  citation    String
+  biasNotes   String?  // Critical for research transparency
+  license     String?
+
+  courses     Course[] @relation("CourseDatasets")
+  createdAt   DateTime @default(now())
+}
+
+model Assessment {
+  id          String   @id @default(uuid())
+  title       String
+  type        String   // PRE_TEST, POST_TEST, QUIZ
+  
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  
+  results     AssessmentResult[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AssessmentResult {
+  id            String   @id @default(uuid())
+  assessmentId  String
+  assessment    Assessment @relation(fields: [assessmentId], references: [id])
+  
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  
+  score         Float
+  maxScore      Float    @default(100)
+  
+  aiConfidence  Float?   // Log if AI grading was involved
+  
+  completedAt   DateTime @default(now())
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  date        DateTime @default(now()) // For time-series analysis
+  
+  xpGained    Int      @default(0)
+  timeSpent   Int      @default(0) // In seconds
+  modulesCompleted Int @default(0)
+  
+  @@index([userId, date])
+}
+
+model AccessibilityUsage {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  feature     String   // e.g. "TTS", "HighContrast", "SignMode"
+  action      String   // ENABLED, DISABLED, USED_ONCE
+  
+  context     String?  // Where it was used (e.g. "/courses/math")
+  timestamp   DateTime @default(now())
+}
+
+model ResearchExport {
+  id          String   @id @default(uuid())
+  filename    String
+  url         String
+  generatedBy String   // Admin ID
+  
+  cohort      String?  // e.g. "Grade 5 Pilot"
+  recordCount Int
+  
+  createdAt   DateTime @default(now())
+}
+
+// *** AI TUTOR ANALYTICS ***
+
+model TutorInteraction {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  question    String   // User's question
+  response    String   // AI's response
+  
+  topic       String?  // Detected topic (e.g., "Algebra", "Photosynthesis")
+  subject     String?  // Course subject (e.g., "Mathematics", "Science")
+  courseId    String?  // Related course if any
+  
+  responseTime Int     // Response time in milliseconds
+  tokensUsed  Int?     // Token count if available
+  
+  helpful     Boolean? // User feedback (null if not rated)
+  
+  provider    String   @default("gemini") // "gemini", "openai", "mock"
+  model       String?  // e.g., "gemini-1.5-flash", "gpt-4o"
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId, createdAt])
+  @@index([subject, createdAt])
+}

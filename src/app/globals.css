@@ -1,0 +1,433 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius));
+  --radius-lg: calc(var(--radius) + 2px);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+/* Base Theme Variables - EduAIThon ICTIEE 2026 Conference Branding */
+:root {
+  /* MAIN THEME - Deep Focus (Teal & Slate) */
+  --background: #f8fafc;
+  /* Slate-50: Cool, low-glare background */
+  --foreground: #0f172a;
+  /* Slate-900: High contrast text */
+
+  /* CARDS & SURFACES */
+  --card: #ffffff;
+  /* White: Clean surface for content */
+  --card-foreground: #0f172a;
+
+  /* OVERLAYS (Dialogs, Popovers, Tooltips) */
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* BRANDING */
+  --primary: #0d9488;
+  /* Teal-600: Calming, accessible teal */
+  --primary-foreground: #ffffff;
+
+  /* ACTION / ACCENT */
+  --accent: #f0fdfa;
+  /* Teal-50: subtle hover states */
+  --accent-foreground: #115e59;
+  /* Teal-800 */
+
+  /* SECONDARY */
+  --secondary: #e2e8f0;
+  /* Slate-200: Secondary buttons/borders */
+  --secondary-foreground: #1e293b;
+  /* Slate-800 */
+
+  /* MUTED ELEMENTS */
+  --muted: #f1f5f9;
+  /* Slate-100 */
+  --muted-foreground: #64748b;
+  /* Slate-500: Subtitles */
+
+  /* DESTRUCTIVE / ALERTS */
+  --destructive: #ef4444;
+  /* Red-500 */
+  --destructive-foreground: #ffffff;
+
+  /* BORDERS & INPUTS */
+  --border: #cbd5e1;
+  /* Slate-300: Crisp borders */
+  --input: #cbd5e1;
+  --ring: #0d9488;
+  /* Teal-600: Focus rings */
+
+  --radius: 0.5rem;
+
+  /* Charts - Academic/Cool tones */
+  --chart-1: #0d9488;
+  /* Teal-600 */
+  --chart-2: #2dd4bf;
+  /* Teal-400 */
+  --chart-3: #0f172a;
+  /* Slate-900 */
+  --chart-4: #94a3b8;
+  /* Slate-400 */
+  --chart-5: #115e59;
+  /* Teal-800 */
+
+  /* Sidebar */
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0d9488;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0fdfa;
+  --sidebar-accent-foreground: #115e59;
+  --sidebar-border: #cbd5e1;
+  --sidebar-ring: #0d9488;
+}
+
+/* Dark Mode - Deep Focus */
+.dark {
+  /* Background - Dark Slate */
+  --background: #020617;
+  /* Slate-950 */
+  --foreground: #f8fafc;
+  /* Slate-50 */
+
+  /* Cards - Dark Slate */
+  --card: #0f172a;
+  /* Slate-900 */
+  --card-foreground: #f8fafc;
+
+  /* Popover */
+  --popover: #0f172a;
+  /* Slate-900 */
+  --popover-foreground: #f8fafc;
+
+  /* Primary - Teal */
+  --primary: #14b8a6;
+  /* Teal-500: Lighter for dark mode */
+  --primary-foreground: #020617;
+
+  /* Secondary */
+  --secondary: #1e293b;
+  /* Slate-800 */
+  --secondary-foreground: #f8fafc;
+
+  /* Muted */
+  --muted: #1e293b;
+  /* Slate-800 */
+  --muted-foreground: #94a3b8;
+  /* Slate-400 */
+
+  /* Accent */
+  --accent: #1e293b;
+  /* Slate-800 */
+  --accent-foreground: #f0fdfa;
+
+  /* Destructive */
+  --destructive: #f43f5e;
+  /* Red-500 */
+  --destructive-foreground: #ffffff;
+
+  /* Borders */
+  --border: #334155;
+  /* Slate-700 */
+  --input: #334155;
+  --ring: #14b8a6;
+  /* Teal-500 */
+
+  /* Charts */
+  --chart-1: #14b8a6;
+  /* Teal-500 */
+  --chart-2: #2dd4bf;
+  /* Teal-400 */
+  --chart-3: #94a3b8;
+  /* Slate-400 */
+  --chart-4: #e2e8f0;
+  /* Slate-200 */
+  --chart-5: #115e59;
+  /* Teal-800 */
+
+  /* Sidebar */
+  --sidebar: #020617;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #14b8a6;
+  --sidebar-primary-foreground: #020617;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: #334155;
+  --sidebar-ring: #14b8a6;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  /* Crystal Foundation Gradient */
+  background: linear-gradient(135deg, #fdf4ff 0%, #e0e7ff 100%);
+  min-height: 100vh;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+/* Typography Utilities */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply tracking-tight font-semibold text-foreground;
+}
+
+h1 {
+  @apply text-3xl md:text-4xl lg:text-5xl mb-6;
+}
+
+h2 {
+  @apply text-2xl md:text-3xl mb-4;
+}
+
+h3 {
+  @apply text-xl md:text-2xl mb-3;
+}
+
+/* Component Overrides for "Professional" Feel */
+.glass-panel {
+  @apply bg-card/60 border border-border/50 backdrop-blur-md shadow-sm;
+}
+
+/* Accessibility Utilities */
+.text-large {
+  font-size: 110%;
+}
+
+.text-extra-large {
+  font-size: 125%;
+}
+
+.font-style-serif {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.font-style-dyslexic {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+  line-height: 1.6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* High contrast text - WCAG AA compliant */
+  p,
+  span,
+  li {
+    color: #2E2E2E;
+  }
+
+  .dark p,
+  .dark span,
+  .dark li {
+    color: #F2EAD3;
+  }
+
+  /* Card readability improvements */
+  .card,
+  [class*="bg-card"] {
+    border: 1px solid #D6C6A1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Input readability */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    color: #2E2E2E;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid #0F4C45;
+    outline-offset: 2px;
+  }
+}
+
+/* =========================================
+   PART 1: GLOBAL COLOR CONSISTENCY RULE
+   MANDATORY: White text on Teal/Green
+   ========================================= */
+@layer utilities {
+  .text-on-teal {
+    color: #FFFFFF !important;
+  }
+
+  /* TIER-1 PREMIUM GLASSMORPHISM ENGINE (Antigravity) */
+  .glass-morphism {
+    /* Translucency & Tint */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.40) 0%,
+        rgba(255, 255, 255, 0.10) 100%);
+
+    /* Optical Physics (The Secret Sauce) */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+    /* Cut-Glass Border */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+
+    /* Depth & Shadow - Subtle, Embedded Feel */
+    box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.05);
+  }
+
+  /* Enforce on specific SOLID background classes only */
+  /* Avoid [class*="bg-primary"] as it catches bg-primary/10 (light) */
+  .bg-primary,
+  .bg-primary\/90,
+  .bg-teal-900,
+  .bg-emerald-900,
+  [data-state="checked"].data-\[state\=checked\]\:bg-primary,
+  .btn-primary {
+    color: #FFFFFF;
+  }
+
+  /* Ensure hover states don't break contrast on SOLID backgrounds */
+  .bg-primary:hover,
+  .bg-teal-900:hover {
+    color: #FFFFFF;
+  }
+}
+
+/* =========================================
+   PART 2: GLOBAL ANIMATION & MOTION RULES
+   OBJECTIVE: Subtle, professional motion
+   ========================================= */
+@layer components {
+
+  /* Interactive Element Defaults */
+  .btn-interactive,
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  .interactive-card {
+    transition-property: transform, background-color, box-shadow, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Ease-out-ish */
+  }
+
+  /* 1. Hover Effects */
+  .btn-interactive:hover,
+  button:not(:disabled):hover,
+  [role="button"]:not([aria-disabled="true"]):hover {
+    /* Smooth background darkening handled by tailwind opacity utilities usually, 
+       but we enforce subtle elevation here if not overridden */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 76, 69, 0.15);
+    /* Subtle teal shadow */
+  }
+
+  /* 2. Active / Click Effects */
+  .btn-interactive:active,
+  button:not(:disabled):active,
+  [role="button"]:not([aria-disabled="true"]):active {
+    transform: scale(0.98) translateY(0);
+    /* Soft press-down */
+    transition-duration: 100ms;
+  }
+
+  /* 3. Dropdowns / Modals / Toggles */
+  .animate-slide-up {
+    animation: slideUp 200ms ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 200ms ease-out forwards;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* =========================================
+   ACCESSIBILITY & PERFORMANCE
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
