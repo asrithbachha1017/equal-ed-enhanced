@@ -1,75 +1,328 @@
-# Lumina - Multimodal Learning Assistant
+# 🎓 EqualEd – Enhanced AI-Powered Educational Learning Platform
 
-> **Hackathon Submission**: Multimodal AI for Accessible Education
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css" />
+  <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel" />
+</p>
 
-**Lumina** is an AI-powered learning platform designed to make educational content accessible to everyone, specifically targeting students with cognitive, visual, and auditory disabilities.
+---
 
-![Dashboard Preview](./public/dashboard-preview.png)
+## 🌐 Live Demo
 
-## 🌟 Key Features
+🔗 **Website:** https://equal-ed-enhanced.vercel.app/
 
-### 1. **Multimodal Content Transformation**
-- **Automated Simplification**: Uses GPT-4o to rewrite complex text to a Grade 5-6 reading level for cognitive accessibility.
-- **Audio Generation**: Converts text to high-quality speech using Google Cloud TTS Studio voices.
-- **Transcription**: (Planned/Mocked) Uploaded audio is transcribed using OpenAI Whisper.
+📂 **GitHub Repository:** https://github.com/asrithbachha1017/equal-ed-enhanced
 
-### 2. **AI Teaching Assistant**
-- **Context-Aware Q&A**: A floating chat assistant grounded in the specific lesson content.
-- **Explain Like I'm 5**: Ask follow-up questions to break down difficult concepts.
+---
 
-### 3. **Accessibility First Design**
-- **Learner Preferences**:
-  - **Font Size**: Adjustable typography toggles.
-  - **High Contrast Mode**: WCAG AAA compliant yellow-on-black theme.
-  - **Reduced Motion**: Disables non-essential animations.
-  - **Vegetable**: (Just kidding - Voice Navigation support is prepared).
-- **Compliance**: Built with Radix UI primitives for full keyboard navigation and screen reader support (ARIA landmarks, Live Regions).
+# 📖 Overview
 
-## 🚀 Tech Stack
+EqualEd is an AI-assisted educational learning platform designed to provide students with structured learning resources through an intuitive and modern web interface.
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Shadcn/UI
-- **Database**: SQLite (Dev) / Prisma ORM
-- **AI Services**:
-  - OpenAI (GPT-4o, Whisper)
-  - Google Cloud (Text-to-Speech)
+This enhanced version focuses on improving the user experience by introducing powerful search capabilities, persistent bookmarking, responsive UI improvements, loading skeletons, and a cleaner overall design.
 
-## 🛠️ Setup & Running Locally
+---
 
-1. **Clone & Install**
-   ```bash
-   git clone <repo-url>
-   cd IASF-2K26
-   npm install
-   ```
+# ✨ Features
 
-2. **Environment Setup**
-   Copy `.env.example` to `.env` and add your keys:
-   ```env
-   OPENAI_API_KEY=sk-...
-   GOOGLE_APPLICATION_CREDENTIALS=./google-credentials.json
-   ```
+## 📚 Course Management
 
-3. **Database Setup**
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   # Optional: Seed data
-   # npx ts-node prisma/seed.ts
-   ```
+- Browse educational courses
+- View detailed course information
+- Organized learning resources
+- Responsive course cards
 
-4. **Run Development Server**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000)
+---
 
-## 🧪 Deployment
+## 🔍 Smart Course Search
 
-This project is optimized for deployment on **Vercel**.
-See `DEPLOYMENT.md` for detailed instructions.
+- Real-time course search
+- Instant filtering
+- Search by course title
+- Search by description
+- Fast and responsive UI
 
-## 📄 License
+---
 
-MIT License. Built for the IASF 2026 Hackathon.
+## 🔖 Bookmark System
+
+- Save favourite courses
+- Persistent bookmarks using LocalStorage
+- One-click bookmarking
+- Bookmark synchronization across pages
+
+---
+
+## ❤️ Saved Courses
+
+- Dedicated Saved Courses page
+- View all bookmarked courses
+- Remove bookmarks instantly
+- Search within saved courses
+
+---
+
+## ⚡ Loading Skeletons
+
+Implemented loading states for:
+
+- Dashboard
+- Courses
+- Teacher Portal
+- Saved Courses
+- Course Details
+
+This creates a smoother user experience during page transitions.
+
+---
+
+## 🎨 Modern UI Improvements
+
+- Improved typography
+- Modern gradients
+- Responsive layouts
+- Better spacing
+- Hover animations
+- Improved dashboard design
+- Sticky sidebar
+- Enhanced navigation
+
+---
+
+## 📱 Responsive Design
+
+Works across
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+---
+
+# 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|----------|
+| Next.js | Frontend Framework |
+| React | UI Development |
+| TypeScript | Type Safety |
+| Tailwind CSS | Styling |
+| Shadcn UI | UI Components |
+| LocalStorage | Bookmark Persistence |
+| Lucide Icons | Icons |
+| Vercel | Deployment |
+| Git & GitHub | Version Control |
+
+---
+
+# 🏗 Project Structure
+
+```
+src/
+│
+├── app/
+│   ├── courses/
+│   ├── dashboard/
+│   ├── teacher/
+│   ├── saved-courses/
+│   └── ...
+│
+├── components/
+│   ├── course/
+│   ├── layout/
+│   ├── ui/
+│   └── ...
+│
+├── hooks/
+│   └── use-bookmarks.ts
+│
+├── lib/
+│
+└── styles/
+```
+
+---
+
+# 🚀 Major Enhancements Implemented
+
+The following enhancements were added in this version:
+
+### ✅ Real-time Course Search
+
+- Dynamic filtering
+- Optimized search experience
+- Reusable search component
+
+---
+
+### ✅ Bookmark Feature
+
+- Save favourite courses
+- Persistent LocalStorage support
+- Shared bookmark state
+
+---
+
+### ✅ Saved Courses Module
+
+- Dedicated page
+- Bookmark management
+- Empty state handling
+
+---
+
+### ✅ Loading Skeletons
+
+Added loading placeholders using Next.js loading.tsx for a smoother user experience.
+
+---
+
+### ✅ UI Modernization
+
+- Better layouts
+- Improved spacing
+- Dashboard redesign
+- Sticky navigation
+- Enhanced cards
+- Better typography
+
+---
+
+# 💻 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/asrithbachha1017/equal-ed-enhanced.git
+```
+
+Go to project directory
+
+```bash
+cd equal-ed-enhanced
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Open
+
+```
+http://localhost:3000
+```
+
+---
+
+# ⚙ Build for Production
+
+```bash
+npm run build
+```
+
+Run production server
+
+```bash
+npm start
+```
+
+---
+
+# 📸 Screenshots
+
+> Add screenshots inside a folder named **screenshots**
+
+Example
+
+```
+screenshots/
+│
+├── home.png
+├── dashboard.png
+├── courses.png
+├── saved-courses.png
+└── teacher.png
+```
+
+Then include
+
+```markdown
+## Home
+
+![Home](screenshots/home.png)
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+## Courses
+
+![Courses](screenshots/courses.png)
+
+## Saved Courses
+
+![Saved Courses](screenshots/saved-courses.png)
+```
+
+---
+
+# 🎯 Future Improvements
+
+- Authentication
+- User Profiles
+- Progress Tracking
+- AI Course Recommendation
+- Backend Integration
+- Database Support
+- Admin Panel
+- Dark Mode
+- Course Completion Certificates
+
+---
+
+# 📈 Learning Outcomes
+
+During this project, I strengthened my understanding of:
+
+- Next.js App Router
+- React Components
+- Client & Server Components
+- TypeScript
+- Tailwind CSS
+- LocalStorage
+- Reusable Component Design
+- Responsive UI Design
+- Git & GitHub Workflow
+- Vercel Deployment
+
+---
+
+# 👨‍💻 Developer
+
+**Bacha Asrith**
+
+GitHub
+
+https://github.com/asrithbachha1017
+
+LinkedIn
+
+(Add your LinkedIn profile here)
+
+---
+
+# 📜 License
+
+This project is intended for educational and portfolio purposes.
