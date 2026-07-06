@@ -5,13 +5,17 @@ import React from "react"
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Sparkles, UserCog, LogOut } from "lucide-react"
+import { UserCog, LogOut, Bookmark } from "lucide-react"
 import { AccessibilitySettings } from "@/components/features/accessibility-settings"
 import { Logo } from "@/components/ui/logo"
 import { useSession, signOut } from "next-auth/react"
+import { useBookmarks } from "@/hooks/use-bookmarks"
+import { cn } from "@/lib/utils"
 
 export function Navbar() {
     const { data: session } = useSession();
+    const { bookmarkedIds, isHydrated } = useBookmarks();
+    const savedCount = bookmarkedIds.size;
 
     return (
         <nav className="bg-background/95 sticky top-0 z-50 glass-morphism !border-0 shadow-sm">
@@ -28,6 +32,30 @@ export function Navbar() {
                     <AccessibilitySettings />
                     <Link href="/dashboard">
                         <Button variant="ghost">Dashboard</Button>
+                    </Link>
+
+                    {/* ── Saved Courses link with live badge ── */}
+                    <Link href="/saved-courses">
+                        <Button
+                            variant="ghost"
+                            className="gap-2 relative"
+                            aria-label={`Saved courses${isHydrated && savedCount > 0 ? `, ${savedCount} bookmarked` : ""}`}
+                        >
+                            <Bookmark
+                                className={cn(
+                                    "h-4 w-4 transition-colors",
+                                    isHydrated && savedCount > 0
+                                        ? "fill-primary text-primary"
+                                        : "text-muted-foreground"
+                                )}
+                            />
+                            <span className="hidden sm:inline">Saved</span>
+                            {isHydrated && savedCount > 0 && (
+                                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                                    {savedCount > 9 ? "9+" : savedCount}
+                                </span>
+                            )}
+                        </Button>
                     </Link>
 
                     {session ? (
@@ -55,3 +83,4 @@ export function Navbar() {
         </nav>
     )
 }
+

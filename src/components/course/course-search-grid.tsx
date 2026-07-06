@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { BookOpen, Database, ArrowRight, Search, X } from "lucide-react";
 import type { MockCourse } from "@/lib/mock-db";
+import { BookmarkButton } from "@/components/course/bookmark-button";
 
 interface CourseSearchGridProps {
     courses: MockCourse[];
@@ -94,7 +95,10 @@ function DefaultGrid({ courses }: { courses: MockCourse[] }) {
                             <Badge variant="secondary" className="bg-primary/10 text-primary">
                                 {course.levels.length} Levels
                             </Badge>
-                            <BookOpen className="h-5 w-5 text-slate-400" />
+                            <div className="flex items-center gap-1">
+                                <BookmarkButton courseId={course.id} />
+                                <BookOpen className="h-5 w-5 text-slate-400" />
+                            </div>
                         </div>
                         <CardTitle className="text-2xl">{course.title}</CardTitle>
                         <CardDescription className="text-base mt-2">
@@ -150,10 +154,13 @@ function DashboardGrid({ courses }: { courses: MockCourse[] }) {
                             <div className="p-2 bg-primary/10 rounded-lg text-primary">
                                 <BookOpen className="h-6 w-6" />
                             </div>
-                            <Badge variant="outline" className="border-primary text-primary bg-primary/5">
-                                <Database className="w-3 h-3 mr-1" />
-                                Data-Driven
-                            </Badge>
+                            <div className="flex items-center gap-1.5">
+                                <BookmarkButton courseId={course.id} />
+                                <Badge variant="outline" className="border-primary text-primary bg-primary/5">
+                                    <Database className="w-3 h-3 mr-1" />
+                                    Data-Driven
+                                </Badge>
+                            </div>
                         </div>
                         <CardTitle className="text-xl">{course.title}</CardTitle>
                         <CardDescription>{course.description}</CardDescription>
