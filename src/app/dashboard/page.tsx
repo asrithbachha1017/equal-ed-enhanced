@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MOCK_DB } from "@/lib/mock-db"; // Mock Data
 import { useAccessibility } from "@/contexts/accessibility-context"; // Context
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
@@ -31,6 +32,7 @@ export default function DashboardPage() {
     const { voiceNavigation, setVoiceNavigation } = useAccessibility();
     const [announcement, setAnnouncement] = useState("");
     const [showOverview, setShowOverview] = useState(true); // Auto-show on load
+    const [isLoading, setIsLoading] = useState(true); // Simulated fetch delay
 
     // Mock Data for "Continue Learning"
     const activeCourse = MOCK_DB.courses.find(c => c.title.includes("Science")) || MOCK_DB.courses[0];
@@ -38,10 +40,16 @@ export default function DashboardPage() {
     const activeLesson = "Planetary Orbits";
     const activeProgress = 65;
 
+    // Simulate a 1.2-second data fetch on mount
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1200);
+        return () => clearTimeout(timer);
+    }, []);
+
     // Initial Announcement (Blind User Orientation)
     useEffect(() => {
-        announceContext();
-    }, []);
+        if (!isLoading) announceContext();
+    }, [isLoading]);
 
     const announceContext = () => {
         const msg = `Dashboard loaded. Active Grade: 5. You have 1 course in progress. Voice assistance is ${voiceNavigation ? "On" : "Off"}.`;
@@ -63,6 +71,48 @@ export default function DashboardPage() {
             router.push(route);
         }, 500);
     };
+
+    // ── Loading skeleton ──────────────────────────────────────────────────────
+    if (isLoading) {
+        return (
+            <div className="space-y-8 animate-pulse">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-6">
+                    <div className="space-y-2">
+                        <Skeleton className="h-10 w-56" />
+                        <div className="flex gap-2">
+                            <Skeleton className="h-6 w-28 rounded-full" />
+                            <Skeleton className="h-6 w-20 rounded-full" />
+                        </div>
+                    </div>
+                    <Skeleton className="h-10 w-36 rounded-lg" />
+                </div>
+
+                {/* 3 action buttons */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-28 w-full rounded-xl" />
+                    ))}
+                </div>
+
+                {/* Two-column lower section */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-4 rounded-xl border p-6">
+                        <Skeleton className="h-7 w-48" />
+                        <Skeleton className="h-10 w-3/4" />
+                        <Skeleton className="h-5 w-1/2" />
+                        <Skeleton className="h-4 w-full rounded-full" />
+                        <Skeleton className="h-14 w-full rounded-md" />
+                    </div>
+                    <div className="space-y-4">
+                        <Skeleton className="h-7 w-36" />
+                        <Skeleton className="h-[350px] w-full rounded-xl" />
+                        <Skeleton className="h-28 w-full rounded-xl" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
