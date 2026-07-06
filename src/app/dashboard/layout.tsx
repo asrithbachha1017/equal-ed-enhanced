@@ -2,7 +2,6 @@ export const dynamic = 'force-dynamic';
 
 import { Navbar } from "@/components/layout/navbar"
 import { Sidebar } from "@/components/layout/sidebar"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function DashboardLayout({
     children,
@@ -10,18 +9,22 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-background">
             <Navbar />
-            <div className="flex flex-1 w-full items-stretch">
-                <aside className="hidden md:block w-64 shrink-0 h-full">
+            <div className="flex flex-1 w-full">
+                {/* Sidebar — hidden on mobile, fixed-width on md+ */}
+                <aside className="hidden md:block w-60 shrink-0 sticky top-16 self-start h-[calc(100vh-4rem)]">
                     <Sidebar />
                 </aside>
-                <main className="flex-1 w-full p-6 md:p-8 pt-24">
+
+                {/* Main content — consumes remaining width */}
+                <main
+                    id="dashboard-main"
+                    className="flex-1 min-w-0 p-6 md:p-8 pt-8"
+                >
                     {children}
                 </main>
             </div>
         </div>
     )
 }
-
-

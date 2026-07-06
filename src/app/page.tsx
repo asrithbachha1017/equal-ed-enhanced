@@ -47,7 +47,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background pb-20">
+    <main className="min-h-screen bg-background pb-20 hero-gradient">
       <Navbar />
 
       {/* Quick Access Toolbar - Below Navbar */}
@@ -84,11 +84,11 @@ export default function Home() {
 
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mr-2 hidden md:block">Active: Grade {selectedGrade}</span>
 
-        <Button variant="outline" size="sm" className="rounded-full gap-2 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10" onClick={() => router.push('/dashboard')}>
+        <Button variant="outline" size="sm" className="toolbar-pill rounded-full gap-2 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10" onClick={() => router.push('/dashboard')}>
           <BookOpen className="h-4 w-4" /> Browse Courses
         </Button>
 
-        <Button variant="outline" size="sm" className="rounded-full gap-2 border-primary/20 hover:bg-primary/5 hover:text-primary dark:text-white" onClick={() => router.push('/sign-language')}>
+        <Button variant="outline" size="sm" className="toolbar-pill rounded-full gap-2 border-primary/20 hover:bg-primary/5 hover:text-primary dark:text-white" onClick={() => router.push('/sign-language')}>
           <HandMetal className="h-4 w-4" /> Sign Interpreter
         </Button>
 
@@ -128,10 +128,10 @@ export default function Home() {
         {/* Welcome Header */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate-in fade-in slide-in-from-top-5 duration-500">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-              Welcome back, Student! 👋
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Welcome back, <span className="text-primary">Student!</span> 👋
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-2 text-base md:text-lg">
               Ready to learn something new today?
             </p>
           </div>
@@ -166,8 +166,8 @@ export default function Home() {
                       <span>Progress</span>
                       <span className="font-bold">{lastLesson.progress}%</span>
                     </div>
-                    <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                      <div className="h-full bg-primary w-[65%]" />
+                    <div className="h-2.5 w-full bg-secondary rounded-full overflow-hidden">
+                      <div className="h-full bg-primary w-[65%] rounded-full progress-glow transition-all duration-700" />
                     </div>
                   </div>
                 </CardContent>
@@ -189,16 +189,17 @@ export default function Home() {
               </div>
             </section>
 
-            <Card className="bg-primary text-primary-foreground border-none relative overflow-hidden">
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
+            <Card className="bg-gradient-to-br from-primary to-teal-700 text-primary-foreground border-none relative overflow-hidden shadow-lg">
+              <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
+              <div className="absolute -left-4 bottom-0 w-20 h-20 bg-white/5 rounded-full blur-2xl" />
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg">
                   Daily Tip 💡
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-primary-foreground/90 text-sm italic">
-                  "Regular review sessions help solidify long-term memory."
+                <p className="text-primary-foreground/90 text-sm italic leading-relaxed">
+                  &quot;Regular review sessions help solidify long-term memory.&quot;
                 </p>
               </CardContent>
             </Card>

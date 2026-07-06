@@ -30,23 +30,27 @@ export default function SavedCoursesPage() {
     );
 
     return (
-        <main className="min-h-screen bg-slate-50 dark:bg-slate-950">
+        <main className="min-h-screen bg-background hero-gradient">
             <Navbar />
 
-            <div className="max-w-7xl mx-auto px-6 pt-12 pb-20 space-y-8">
+            <div className="max-w-7xl mx-auto px-6 pt-14 pb-24 space-y-10">
                 {/* ── Page heading ── */}
-                <div className="space-y-3">
+                <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary">
+                        <span className="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-primary/10 text-primary shrink-0">
                             <Bookmark className="h-5 w-5 fill-primary" />
                         </span>
-                        <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-                            Saved Courses
-                        </h1>
+                        <span className="text-xs font-semibold uppercase tracking-widest text-primary/70">
+                            My Library
+                        </span>
                     </div>
-                    <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                        Saved Courses
+                    </h1>
+                    <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
                         Your personally bookmarked courses — ready to pick up where you left off.
                     </p>
+                    <div className="h-px bg-gradient-to-r from-primary/20 via-primary/10 to-transparent" />
                 </div>
 
                 {/* ── Content ── */}

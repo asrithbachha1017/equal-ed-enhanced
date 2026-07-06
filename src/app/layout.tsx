@@ -13,6 +13,7 @@ import { SessionProvider } from "@/components/providers/session-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ScreenNarrationProvider } from "@/components/accessibility/screen-narration-provider";
+import { SiteFooter } from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,6 +61,7 @@ export default function RootLayout({
                     <div id="main-content" className="flex-1">
                       {children}
                     </div>
+                    <SiteFooter />
                     <VoiceAssistantProvider>
                       {/* Global Voice Control Overlay - Floating above all content */}
                       <Suspense fallback={null}>

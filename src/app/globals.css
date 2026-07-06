@@ -431,3 +431,148 @@ h3 {
     scroll-behavior: auto !important;
   }
 }
+
+/* =========================================
+   PART 3: UI MODERNIZATION UTILITIES
+   Pure CSS — zero new dependencies
+   ========================================= */
+
+/* ── Card hover lift ─────────────────────────
+   Subtle 3-D elevation with a spring easing
+   (cubic-bezier with overshoot).
+   Applied alongside Tailwind classes on cards. */
+.card-hover-lift {
+  transition: transform 220ms cubic-bezier(0.34, 1.4, 0.64, 1),
+              box-shadow 220ms ease,
+              border-color 220ms ease;
+  will-change: transform;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow:
+    0 16px 40px -8px rgba(13, 148, 136, 0.20),
+    0 4px 16px -4px rgba(13, 148, 136, 0.12);
+}
+
+.card-hover-lift:active {
+  transform: translateY(-1px) scale(1.004);
+  transition-duration: 80ms;
+}
+
+/* ── Active nav underline ────────────────────
+   A 2-px teal pill under the active nav item,
+   animated in from the centre outward.        */
+.nav-link-active {
+  position: relative;
+  color: var(--primary) !important;
+  font-weight: 600;
+}
+
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  inset-inline: 8px;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--primary);
+  animation: navUnderlineIn 180ms ease-out forwards;
+}
+
+@keyframes navUnderlineIn {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+/* ── Sidebar active item ─────────────────────
+   Left-border accent + tinted background for
+   the currently-active sidebar route.         */
+.sidebar-item-active {
+  background: linear-gradient(90deg,
+    rgba(13, 148, 136, 0.14) 0%,
+    rgba(13, 148, 136, 0.04) 100%) !important;
+  color: var(--primary) !important;
+  border-left: 3px solid var(--primary) !important;
+  padding-left: calc(0.75rem - 3px) !important;
+  font-weight: 600 !important;
+}
+
+/* ── Hero radial gradient ────────────────────
+   Soft teal glow behind the hero heading.     */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -8%,
+      rgba(13, 148, 136, 0.11) 0%, transparent 68%),
+    linear-gradient(180deg,
+      rgba(13, 148, 136, 0.05) 0%, transparent 35%);
+}
+
+.dark .hero-gradient {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -8%,
+      rgba(20, 184, 166, 0.16) 0%, transparent 68%),
+    linear-gradient(180deg,
+      rgba(20, 184, 166, 0.07) 0%, transparent 35%);
+}
+
+/* ── Progress bar glow ───────────────────────
+   Adds a teal bloom to filled progress bars.  */
+.progress-glow {
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.55);
+}
+
+/* ── Toolbar pill hover ──────────────────────
+   Adds a soft shadow bloom to quick-access
+   pills on hover without colour changes.      */
+.toolbar-pill {
+  transition: background-color 140ms ease,
+              color 140ms ease,
+              border-color 140ms ease,
+              box-shadow 140ms ease;
+}
+
+.toolbar-pill:hover:not(:disabled) {
+  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.22);
+}
+
+/* ── Search bar container focus ─────────────
+   Outer glow when the input inside is focused.*/
+.search-enhanced:focus-within {
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
+  border-radius: 0.5rem;
+  transition: box-shadow 150ms ease;
+}
+
+/* ── Site footer ─────────────────────────────
+   Dark gradient footer surface.               */
+.site-footer {
+  background: linear-gradient(135deg,
+    rgba(15, 23, 42, 0.99) 0%,
+    rgba(2, 6, 23, 1) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Social icon hover ───────────────────────
+   Gentle lift + teal tint on social links.    */
+.social-icon-btn {
+  transition: transform 140ms ease,
+              opacity 140ms ease,
+              color 140ms ease;
+}
+
+.social-icon-btn:hover {
+  transform: translateY(-2px);
+  opacity: 1 !important;
+  color: rgb(20, 184, 166) !important; /* teal-500 */
+}
+
+/* ── No-scrollbar helper ─────────────────────
+   Hides scrollbars on overflow-x toolbars.    */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

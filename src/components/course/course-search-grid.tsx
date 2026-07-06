@@ -37,7 +37,7 @@ export function CourseSearchGrid({ courses, variant = "default" }: CourseSearchG
     return (
         <div className="space-y-6">
             {/* ── Search bar ── */}
-            <div className="relative max-w-md">
+            <div className="relative max-w-md search-enhanced">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <Input
                     id="course-search-input"
@@ -88,7 +88,7 @@ function DefaultGrid({ courses }: { courses: MockCourse[] }) {
             {courses.map((course) => (
                 <Card
                     key={course.id}
-                    className="flex flex-col h-full hover:shadow-lg transition-shadow border-t-4 border-t-primary"
+                    className="flex flex-col h-full border border-border hover:border-primary/40 card-hover-lift border-t-4 border-t-primary rounded-xl overflow-hidden"
                 >
                     <CardHeader>
                         <div className="flex justify-between items-start mb-2">
@@ -147,7 +147,7 @@ function DashboardGrid({ courses }: { courses: MockCourse[] }) {
             {courses.map((course) => (
                 <Card
                     key={course.id}
-                    className="flex flex-col h-full border-2 hover:border-primary/50 transition-colors"
+                    className="flex flex-col h-full border-2 border-border hover:border-primary/50 card-hover-lift rounded-xl overflow-hidden"
                 >
                     <CardHeader>
                         <div className="flex justify-between items-start mb-2">
@@ -204,10 +204,14 @@ function DashboardGrid({ courses }: { courses: MockCourse[] }) {
 
 function EmptyState() {
     return (
-        <div className="flex flex-col items-center justify-center py-16 text-center text-muted-foreground gap-3">
-            <Search className="h-10 w-10 opacity-30" />
-            <p className="text-lg font-medium">No courses found</p>
-            <p className="text-sm">Try a different keyword — e.g. "Math", "ASL", or "Science".</p>
+        <div className="flex flex-col items-center justify-center py-20 text-center text-muted-foreground gap-4">
+            <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center">
+                <Search className="h-7 w-7 opacity-40" />
+            </div>
+            <div className="space-y-1">
+                <p className="text-base font-semibold text-foreground">No courses found</p>
+                <p className="text-sm">Try a different keyword — e.g. &quot;Math&quot;, &quot;ASL&quot;, or &quot;Science&quot;.</p>
+            </div>
         </div>
     );
 }

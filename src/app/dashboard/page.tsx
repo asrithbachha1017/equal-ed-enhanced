@@ -166,7 +166,7 @@ export default function DashboardPage() {
                     <Button
                         size="lg"
                         variant="default"
-                        className="h-auto py-6 flex flex-col gap-2 items-center text-center shadow-md bg-indigo-600 hover:bg-indigo-700"
+                        className="h-auto py-6 flex flex-col gap-2 items-center text-center rounded-2xl shadow-lg bg-indigo-600 hover:bg-indigo-700 ring-1 ring-indigo-500/30 transition-all duration-200 hover:shadow-indigo-500/20 hover:shadow-xl"
                         onClick={() => handleAction("All Courses", "/dashboard/courses")}
                     >
                         <Database className="h-8 w-8 mb-1" />
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                     <Button
                         size="lg"
                         variant="default"
-                        className="h-auto py-6 flex flex-col gap-2 items-center text-center shadow-md bg-emerald-600 hover:bg-emerald-700"
+                        className="h-auto py-6 flex flex-col gap-2 items-center text-center rounded-2xl shadow-lg bg-emerald-600 hover:bg-emerald-700 ring-1 ring-emerald-500/30 transition-all duration-200 hover:shadow-emerald-500/20 hover:shadow-xl"
                         onClick={() => handleAction("Sign Language Practice", "/monitor?mode=practice")}
                     >
                         <Star className="h-8 w-8 mb-1" />
@@ -188,12 +188,12 @@ export default function DashboardPage() {
                     <Button
                         size="lg"
                         variant="secondary"
-                        className="h-auto py-6 flex flex-col gap-2 items-center text-center shadow-sm border border-border"
+                        className="h-auto py-6 flex flex-col gap-2 items-center text-center rounded-2xl shadow-sm border border-border ring-1 ring-border/60 transition-all duration-200 hover:border-primary/30 hover:shadow-md"
                         onClick={() => handleAction("Accessibility Settings", "/accessibility")}
                     >
                         <Accessibility className="h-8 w-8 mb-1" />
                         <span className="text-lg font-semibold">Accessibility Settings</span>
-                        <span className="text-muted-foreground text-xs font-normal">Adjust Text, Voice & Contrast</span>
+                        <span className="text-muted-foreground text-xs font-normal">Adjust Text, Voice &amp; Contrast</span>
                     </Button>
                 </div>
             </nav>
@@ -202,10 +202,12 @@ export default function DashboardPage() {
 
                 <div className="lg:col-span-2 space-y-8">
                     {/* SECTION 3: CONTINUE LEARNING */}
-                    <section aria-labelledby="continue-heading" className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-6 glass-morphism">
-                        <div className="flex items-center gap-2 border-b pb-4">
-                            <BookOpen className="h-6 w-6 text-primary" />
-                            <h2 id="continue-heading" className="text-2xl font-bold">Continue Learning</h2>
+                    <section aria-labelledby="continue-heading" className="bg-card rounded-2xl border border-border shadow-sm p-6 space-y-6">
+                        <div className="flex items-center gap-2.5 border-b border-border/60 pb-4">
+                            <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <BookOpen className="h-4 w-4 text-primary" />
+                            </div>
+                            <h2 id="continue-heading" className="text-xl font-bold tracking-tight">Continue Learning</h2>
                         </div>
 
                         <div className="space-y-4">
@@ -217,17 +219,17 @@ export default function DashboardPage() {
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm font-medium">
                                     <span aria-hidden="true">Progress</span>
-                                    <span>{activeProgress}% Complete</span>
+                                    <span className="text-primary font-bold">{activeProgress}% Complete</span>
                                 </div>
                                 <div
-                                    className="h-4 w-full bg-muted rounded-full overflow-hidden"
+                                    className="h-3 w-full bg-muted rounded-full overflow-hidden"
                                     role="progressbar"
                                     aria-valuenow={activeProgress}
                                     aria-valuemin={0}
                                     aria-valuemax={100}
                                     aria-label={`Course Progress: ${activeProgress}%`}
                                 >
-                                    <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${activeProgress}%` }} />
+                                    <div className="h-full bg-primary rounded-full progress-glow transition-all duration-1000" style={{ width: `${activeProgress}%` }} />
                                 </div>
                             </div>
 

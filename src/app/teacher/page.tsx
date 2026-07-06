@@ -79,27 +79,30 @@ export default function TeacherDashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-background p-8 space-y-8">
+        <div className="min-h-screen bg-background p-8 space-y-10 hero-gradient">
 
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-foreground">
-                        Teacher Portal
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-primary/70">Teacher Portal</p>
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                        Curriculum Manager
                     </h1>
-                    <p className="text-muted-foreground">Manage curriculum and track student progress.</p>
+                    <p className="text-muted-foreground text-sm">Manage curriculum and track student progress.</p>
                 </div>
-                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Button asChild className="rounded-full gap-2 shadow-md bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200">
                     <Link href="/teacher/courses/new">
-                        <span className="flex items-center">
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            Create New Course
-                        </span>
+                        <PlusCircle className="h-4 w-4" />
+                        Create New Course
                     </Link>
                 </Button>
             </div>
 
+            {/* Gradient divider */}
+            <div className="h-px bg-gradient-to-r from-primary/20 via-primary/10 to-transparent -mt-2" />
+
             {/* Analytics Row */}
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-3">
                 <AnalyticsCard
                     title="Total Students"
                     value={totalStudents.toString()}
@@ -124,37 +127,40 @@ export default function TeacherDashboard() {
 
             {/* Course Management */}
             <section>
-                <h2 className="text-xl font-bold mb-4 text-foreground">Your Courses</h2>
-                <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
-                    <table className="w-full text-left">
-                        <thead className="bg-muted border-b border-border">
+                <h2 className="text-lg font-semibold tracking-tight mb-4 text-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-5 rounded-full bg-primary inline-block" />
+                    Your Courses
+                </h2>
+                <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+                    <table className="w-full text-left text-sm">
+                        <thead className="bg-muted/60 border-b border-border">
                             <tr>
-                                <th className="p-4 font-semibold text-muted-foreground">Title</th>
-                                <th className="p-4 font-semibold text-muted-foreground">Source</th>
-                                <th className="p-4 font-semibold text-muted-foreground">Levels</th>
-                                <th className="p-4 font-semibold text-muted-foreground">Actions</th>
+                                <th className="px-5 py-3.5 font-semibold text-muted-foreground tracking-wide">Title</th>
+                                <th className="px-5 py-3.5 font-semibold text-muted-foreground tracking-wide">Source</th>
+                                <th className="px-5 py-3.5 font-semibold text-muted-foreground tracking-wide">Levels</th>
+                                <th className="px-5 py-3.5 font-semibold text-muted-foreground tracking-wide">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
                             {allCourses.length > 0 ? (
                                 allCourses.map((course) => (
-                                    <tr key={course.id} className="hover:bg-muted/50 transition-colors">
-                                        <td className="p-4 font-medium text-foreground">{course.title}</td>
-                                        <td className="p-4">
-                                            <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-semibold">
+                                    <tr key={course.id} className="hover:bg-muted/40 transition-colors duration-150">
+                                        <td className="px-5 py-4 font-medium text-foreground">{course.title}</td>
+                                        <td className="px-5 py-4">
+                                            <span className="px-2.5 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold">
                                                 Mock Data
                                             </span>
                                         </td>
-                                        <td className="p-4 text-foreground">{course.levels.length} Levels</td>
-                                        <td className="p-4 flex gap-2">
-                                            <Button variant="ghost" size="sm">Edit</Button>
-                                            <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10">Delete</Button>
+                                        <td className="px-5 py-4 text-muted-foreground">{course.levels.length} Levels</td>
+                                        <td className="px-5 py-4 flex gap-2">
+                                            <Button variant="ghost" size="sm" className="rounded-full hover:bg-primary/10 hover:text-primary">Edit</Button>
+                                            <Button variant="ghost" size="sm" className="rounded-full text-destructive hover:bg-destructive/10">Delete</Button>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={4} className="p-8 text-center text-muted-foreground">
+                                    <td colSpan={4} className="p-10 text-center text-muted-foreground">
                                         No courses found. Create your first one!
                                     </td>
                                 </tr>
