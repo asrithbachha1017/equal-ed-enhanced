@@ -6,14 +6,12 @@ import { AccessibilityProvider } from "@/contexts/accessibility-context";
 import { VoiceAssistantProvider } from "@/contexts/voice-assistant-context";
 import { SignLanguageProvider } from "@/contexts/sign-language-context";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import VoiceControlOverlay from "@/components/voice-control-overlay";
-import { AITutor } from "@/components/ai-tutor";
-import { SignLanguageListener, SignLanguagePlayer, VrAvatarPanel } from "@/components/sign-language";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ScreenNarrationProvider } from "@/components/accessibility/screen-narration-provider";
 import { SiteFooter } from "@/components/layout/footer";
+import { AccessibilityFeaturesWrapper } from "@/components/providers/accessibility-features-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,8 +24,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EqualEd | Access to Learning for Everyone",
-  description: "An accessible, AI-powered learning platform designed for everyone.",
+  title: "EqualEd | Accessible Learning Platform for Everyone",
+  description: "An accessible, AI-powered learning platform designed for everyone. EqualEd features a real-time sign language interpreter, voice navigation assistant, interactive math lab, and custom readability adjustments.",
+  metadataBase: new URL("https://equal-ed.vercel.app"),
+  openGraph: {
+    title: "EqualEd | Accessible Learning Platform for Everyone",
+    description: "An accessible, AI-powered learning platform designed for everyone. EqualEd features a real-time sign language interpreter, voice navigation assistant, interactive math lab, and custom readability adjustments.",
+    url: "https://equal-ed.vercel.app",
+    siteName: "EqualEd",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EqualEd | Accessible Learning Platform for Everyone",
+    description: "An accessible, AI-powered learning platform designed for everyone. Features real-time sign language interpreter, voice assistant, and adaptive learning.",
+  },
+  keywords: ["accessibility", "special education", "inclusive learning", "sign language", "AI tutor", "voice navigation", "WCAG 2.1", "math drills"],
 };
 
 export default function RootLayout({
@@ -63,15 +76,8 @@ export default function RootLayout({
                     </div>
                     <SiteFooter />
                     <VoiceAssistantProvider>
-                      {/* Global Voice Control Overlay - Floating above all content */}
-                      <Suspense fallback={null}>
-                        <VoiceControlOverlay />
-                        <AITutor />
-                        {/* Sign Language Translation Feature */}
-                        <SignLanguageListener />
-                        <SignLanguagePlayer />
-                        <VrAvatarPanel />
-                      </Suspense>
+                      {/* Global Voice Control and Accessibility features wrapper */}
+                      <AccessibilityFeaturesWrapper />
                       <Toaster />
                     </VoiceAssistantProvider>
                   </SignLanguageProvider>

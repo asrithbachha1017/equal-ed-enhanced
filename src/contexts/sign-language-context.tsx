@@ -159,7 +159,7 @@ function setCachedVideo(text: string, lang: TranslationLanguage, videoUrl: strin
 // ANALYTICS
 // ============================================================================
 
-function trackEvent(event: string, data?: Record<string, any>): void {
+function trackEvent(event: string, data?: Record<string, unknown>): void {
     // Placeholder for analytics - integrate with your analytics provider
     console.log('[SignLang Analytics]', event, data);
 }

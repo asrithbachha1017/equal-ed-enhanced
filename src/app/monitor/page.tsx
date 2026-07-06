@@ -1,5 +1,16 @@
 import SignLanguageView from "@/components/sign-language-view";
 import { Navbar } from "@/components/layout/navbar";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sign Language Practice | EqualEd",
+    description: "AI-Powered Sign Language Gesture Recognition and Practice Lab.",
+    openGraph: {
+        title: "Sign Language Practice | EqualEd",
+        description: "AI-Powered Sign Language Gesture Recognition and Practice Lab.",
+        type: "website",
+    }
+};
 
 export default function MonitorPage() {
     return (

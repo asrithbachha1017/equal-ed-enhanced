@@ -213,7 +213,7 @@ export function ConversationHistory({ isOpen, onClose }: ConversationHistoryProp
                                 {/* Top Topics */}
                                 <div>
                                     <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-                                        Topics You've Explored
+                                        Topics You&apos;ve Explored
                                     </h4>
                                     <div className="flex flex-wrap gap-2">
                                         {analytics.topTopics.map((topic) => (

@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Mic, MicOff, Activity } from "lucide-react";
+import { MicOff, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useVoiceAssistant } from "@/contexts/voice-assistant-context";
 import { useHaptics } from "@/hooks/use-haptics";
 import { Button } from "@/components/ui/button";
 
 const VoiceControlOverlay = () => {
-    const { isListening, toggleListening, feedback, transcript, lastIntent } = useVoiceAssistant();
+    const { isListening, toggleListening, feedback, transcript } = useVoiceAssistant();
     const { triggerSuccess, triggerClick } = useHaptics();
 
     // Vibrate on new feedback (command success)
@@ -34,7 +34,7 @@ const VoiceControlOverlay = () => {
             {/* Transcript (Optional Debug) */}
             {isListening && transcript && !feedback && (
                 <div className="bg-black/50 backdrop-blur-sm text-white/80 px-3 py-1 rounded-md text-xs border border-white/10 animate-fade-in">
-                    "{transcript}"
+                    &quot;{transcript}&quot;
                 </div>
             )}
 

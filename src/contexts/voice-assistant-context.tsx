@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { speechService, SpeechService } from "@/lib/voice/speech";
+import { speechService } from "@/lib/voice/speech";
 import { classifyIntent, VoiceIntent } from "@/lib/voice/intents";
 import { ActionExecutor } from "@/lib/voice/executor";
 
@@ -74,7 +74,7 @@ export function VoiceAssistantProvider({ children }: { children: React.ReactNode
     }, [announce]); // Dependencies minimized
 
     // Error Handler
-    const handleError = useCallback((error: any) => {
+    const handleError = useCallback((error: string) => {
         console.warn("[Voice] Error:", error);
         // Optional: announce("I'm having trouble hearing you.");
     }, []);
@@ -83,7 +83,10 @@ export function VoiceAssistantProvider({ children }: { children: React.ReactNode
     useEffect(() => {
         if (isListening) {
             speechService.start(handleResult, handleError);
-            announce("Voice assistant active.");
+            // Defer announce call to prevent synchronous setState within effect
+            setTimeout(() => {
+                announce("Voice assistant active.");
+            }, 0);
         } else {
             speechService.stop();
             // announce("Voice assistant paused."); // Maybe too chatty?

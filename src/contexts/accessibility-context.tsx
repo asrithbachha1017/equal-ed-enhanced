@@ -39,12 +39,15 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
         if (stored) {
             try {
                 const parsed = JSON.parse(stored);
-                setFontSizeState(parsed.fontSize || 'normal');
-                setFontStyleState(parsed.fontStyle || 'system');
-                setHighContrastState(parsed.highContrast || false);
-                setReducedMotionState(parsed.reducedMotion || false);
-                setVoiceNavigationState(parsed.voiceNavigation || false);
-                setScreenNarrationState(parsed.screenNarration || false);
+                // Defer to next event loop tick to avoid synchronous cascading renders warning
+                setTimeout(() => {
+                    setFontSizeState(parsed.fontSize || 'normal');
+                    setFontStyleState(parsed.fontStyle || 'system');
+                    setHighContrastState(parsed.highContrast || false);
+                    setReducedMotionState(parsed.reducedMotion || false);
+                    setVoiceNavigationState(parsed.voiceNavigation || false);
+                    setScreenNarrationState(parsed.screenNarration || false);
+                }, 0);
             } catch (e) {
                 console.error("Failed to parse settings", e);
             }

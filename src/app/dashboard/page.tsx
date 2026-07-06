@@ -24,8 +24,16 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"; // Feedback
-import { ProgressChart } from "@/components/analytics/progress-chart";
-import { StudentOverviewPanel } from "@/components/dashboard/student-overview-panel";
+import dynamic from "next/dynamic";
+
+const ProgressChart = dynamic(() => import("@/components/analytics/progress-chart").then(mod => mod.ProgressChart), {
+    ssr: false,
+    loading: () => <div className="h-[350px] w-full rounded-xl bg-muted animate-pulse" />
+});
+
+const StudentOverviewPanel = dynamic(() => import("@/components/dashboard/student-overview-panel").then(mod => mod.StudentOverviewPanel), {
+    ssr: false
+});
 
 export default function DashboardPage() {
     const router = useRouter();

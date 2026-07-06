@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Types
 export interface GamificationState {
@@ -26,33 +26,15 @@ export const useGamification = () => {
 
     const [mounted, setMounted] = useState(false);
 
-    // Load from Storage on Mount
-    useEffect(() => {
-        setMounted(true);
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                const parsed = JSON.parse(stored);
-                setStats(parsed);
-                checkStreak(parsed);
-            } catch (e) {
-                console.error("Failed to parse gamification data", e);
-            }
-        } else {
-            // New User - Initialize
-            save({ xp: 0, level: 1, streak: 1, lastLogin: new Date().toISOString() });
-        }
-    }, []);
-
-    const save = (newStats: GamificationState) => {
+    const save = useCallback((newStats: GamificationState) => {
         setStats(newStats);
         if (typeof window !== 'undefined') {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(newStats));
         }
-    };
+    }, []);
 
     // Daily Streak Logic
-    const checkStreak = (currentStats: GamificationState) => {
+    const checkStreak = useCallback((currentStats: GamificationState) => {
         const today = new Date().toISOString().split('T')[0];
         const lastDate = currentStats.lastLogin ? currentStats.lastLogin.split('T')[0] : null;
 
@@ -70,20 +52,52 @@ export const useGamification = () => {
         }
 
         save({ ...currentStats, streak: newStreak, lastLogin: new Date().toISOString() });
-    };
+    }, [save]);
 
-    const addXP = (amount: number) => {
-        const newXP = stats.xp + amount;
-        const newLevel = calculateLevel(newXP);
+    // Load from Storage on Mount
+    useEffect(() => {
+        // Defer to next tick to avoid synchronous cascading renders warning
+        const timer = setTimeout(() => {
+            setMounted(true);
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    setStats(parsed);
+                    checkStreak(parsed);
+                } catch (e) {
+                    console.error("Failed to parse gamification data", e);
+                }
+            } else {
+                // New User - Initialize
+                save({ xp: 0, level: 1, streak: 1, lastLogin: new Date().toISOString() });
+            }
+        }, 0);
+        return () => clearTimeout(timer);
+    }, [checkStreak, save]);
 
-        save({
-            ...stats,
-            xp: newXP,
-            level: newLevel
+    const addXP = useCallback((amount: number) => {
+        let levelUp = false;
+        let newLevel = stats.level;
+
+        setStats(prev => {
+            const newXP = prev.xp + amount;
+            newLevel = calculateLevel(newXP);
+            levelUp = newLevel > prev.level;
+            const updated = {
+                ...prev,
+                xp: newXP,
+                level: newLevel
+            };
+            // Side effect: save to localStorage
+            if (typeof window !== 'undefined') {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+            }
+            return updated;
         });
 
-        return { newLevel, levelUp: newLevel > stats.level };
-    };
+        return { newLevel, levelUp };
+    }, [stats.level]);
 
     return {
         stats,

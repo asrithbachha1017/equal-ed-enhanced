@@ -19,6 +19,26 @@ async function getContent(id: string) {
     }
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ contentId: string }> }) {
+    const { contentId } = await params;
+    const content = await getContent(contentId);
+    if (!content) {
+        if (contentId === "demo") {
+            return {
+                title: "Demo Lesson: Space Exploration | EqualEd",
+                description: "EqualEd Interactive Space Exploration Lesson Player",
+            };
+        }
+        return {
+            title: "Lesson Not Found | EqualEd",
+        };
+    }
+    return {
+        title: `${content.title} | EqualEd`,
+        description: `Learn ${content.title} with interactive content simplified text, sign language, and AI tutor.`,
+    };
+}
+
 export default async function LearnPage({ params }: { params: Promise<{ contentId: string }> }) {
     const { contentId } = await params;
     const content = await getContent(contentId)

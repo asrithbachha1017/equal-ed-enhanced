@@ -117,10 +117,16 @@ Text to simplify:
     return generateWithGemini(prompt);
 }
 
+export interface GeminiQuizQuestion {
+    question: string;
+    options: string[];
+    answer: string;
+}
+
 /**
  * Generate quiz questions with Gemini
  */
-export async function generateQuizWithGemini(text: string): Promise<any[]> {
+export async function generateQuizWithGemini(text: string): Promise<GeminiQuizQuestion[]> {
     const prompt = `Generate 3 multiple-choice questions based on this text. Return ONLY valid JSON:
 { "questions": [ { "question": "...", "options": ["A", "B", "C", "D"], "answer": "A" } ] }
 

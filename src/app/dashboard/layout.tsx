@@ -1,7 +1,18 @@
 export const dynamic = 'force-dynamic';
 
-import { Navbar } from "@/components/layout/navbar"
-import { Sidebar } from "@/components/layout/sidebar"
+import type { Metadata } from "next";
+import { Navbar } from "@/components/layout/navbar";
+import { Sidebar } from "@/components/layout/sidebar";
+
+export const metadata: Metadata = {
+    title: "Student Dashboard | EqualEd",
+    description: "Access your dashboard to track learning progress, resume lessons, and browse courses.",
+    openGraph: {
+        title: "Student Dashboard | EqualEd",
+        description: "Access your dashboard to track learning progress, resume lessons, and browse courses.",
+        type: "website",
+    }
+};
 
 export default function DashboardLayout({
     children,

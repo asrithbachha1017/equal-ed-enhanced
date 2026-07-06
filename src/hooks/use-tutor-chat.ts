@@ -162,7 +162,7 @@ export function useTutorChat(options: UseTutorChatOptions = {}) {
                                         : m
                                 ));
                             }
-                        } catch (parseError) {
+                        } catch {
                             // Ignore parse errors for incomplete chunks
                         }
                     }
@@ -179,13 +179,13 @@ export function useTutorChat(options: UseTutorChatOptions = {}) {
                 });
             }
 
-        } catch (err: any) {
-            if (err.name === 'AbortError') {
+        } catch (err) {
+            if (err instanceof Error && err.name === 'AbortError') {
                 // Request was cancelled, ignore
                 return;
             }
 
-            const errorMessage = err.message || "Sorry, I'm having trouble connecting right now.";
+            const errorMessage = err instanceof Error ? err.message : "Sorry, I'm having trouble connecting right now.";
             setError(errorMessage);
 
             // Update the assistant message with error

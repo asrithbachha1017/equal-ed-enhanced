@@ -10,10 +10,18 @@ import { Play, BookOpen, Mic, HandMetal, ArrowRight, Menu, Headset } from "lucid
 import Link from "next/link"
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation"
-import { ProgressChart } from "@/components/analytics/progress-chart"
-import { StudentOverviewPanel } from "@/components/dashboard/student-overview-panel"
+import dynamic from "next/dynamic";
 import { MOCK_DB } from "@/lib/mock-db"
 import { useSignLanguage } from "@/contexts/sign-language-context"
+
+const ProgressChart = dynamic(() => import("@/components/analytics/progress-chart").then(mod => mod.ProgressChart), {
+  ssr: false,
+  loading: () => <div className="h-[350px] w-full rounded-xl bg-muted animate-pulse" />
+});
+
+const StudentOverviewPanel = dynamic(() => import("@/components/dashboard/student-overview-panel").then(mod => mod.StudentOverviewPanel), {
+  ssr: false
+});
 
 
 

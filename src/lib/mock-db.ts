@@ -256,7 +256,7 @@ const SCIENCE_COURSE_LEGACY: MockCourse = { ...SCIENCE_COURSE, id: "course-g5-sc
 const COURSES = [ASL_COURSE, MATH_COURSE, SCIENCE_COURSE, SCIENCE_COURSE_LEGACY];
 
 // Generic Educational Videos (Embed Links) - Keeping for reference if needed
-const VIDEO_MAP: Record<string, string> = {
+export const VIDEO_MAP: Record<string, string> = {
     Mathematics: "https://www.youtube.com/embed/MjSCP8SYfC8", // Math Antics - Basic
     Science: "https://www.youtube.com/embed/libKVRa01L8", // Solar System
     English: "https://www.youtube.com/embed/8Gv0H-vPoDc", // Grammar

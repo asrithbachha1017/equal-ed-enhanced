@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pdf = require('pdf-parse');
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import pdf from 'pdf-parse';
 
 export async function extractTextFromPdf(buffer: Buffer): Promise<string> {
     try {

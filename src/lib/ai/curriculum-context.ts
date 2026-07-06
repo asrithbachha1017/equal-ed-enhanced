@@ -308,8 +308,8 @@ function extractRelatedConcepts(course: MockCourse): string[] {
         if (level.dataset) {
             concepts.push(level.dataset.usage);
         }
-        for (const module of level.modules) {
-            concepts.push(module.title);
+        for (const mod of level.modules) {
+            concepts.push(mod.title);
         }
     }
 
@@ -375,21 +375,21 @@ export function getRelevantContentChunks(
 
         // Add module content
         for (const level of course.levels) {
-            for (const module of level.modules) {
-                if (module.content) {
-                    const relevance = calculateRelevance(module.content, queryTerms);
+            for (const mod of level.modules) {
+                if (mod.content) {
+                    const relevance = calculateRelevance(mod.content, queryTerms);
                     if (relevance > 0) {
                         chunks.push({
-                            text: `${module.title} (${course.title}):\n${module.content}`,
+                            text: `${mod.title} (${course.title}):\n${mod.content}`,
                             relevance
                         });
                     }
                 }
-                if (module.transcript) {
-                    const relevance = calculateRelevance(module.transcript, queryTerms);
+                if (mod.transcript) {
+                    const relevance = calculateRelevance(mod.transcript, queryTerms);
                     if (relevance > 0) {
                         chunks.push({
-                            text: `Lesson Transcript - ${module.title}:\n${module.transcript}`,
+                            text: `Lesson Transcript - ${mod.title}:\n${mod.transcript}`,
                             relevance
                         });
                     }

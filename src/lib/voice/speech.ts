@@ -1,13 +1,40 @@
+// Minimal interfaces to avoid 'any'
+interface SpeechRecognitionEvent {
+    resultIndex: number;
+    results: {
+        [index: number]: {
+            [index: number]: {
+                transcript: string;
+            };
+        };
+    };
+}
+
+interface SpeechRecognitionErrorEvent {
+    error: string;
+}
+
+interface ISpeechRecognition {
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    onresult: ((event: SpeechRecognitionEvent) => void) | null;
+    onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+    onend: (() => void) | null;
+    start: () => void;
+    stop: () => void;
+}
+
 interface IWindow extends Window {
-    webkitSpeechRecognition: any;
-    SpeechRecognition: any;
+    webkitSpeechRecognition: new () => ISpeechRecognition;
+    SpeechRecognition: new () => ISpeechRecognition;
 }
 
 export class SpeechService {
-    private recognition: any;
+    private recognition: ISpeechRecognition | null = null;
     private isListening: boolean = false;
     private onResultCallback: ((text: string) => void) | null = null;
-    private onErrorCallback: ((error: any) => void) | null = null;
+    private onErrorCallback: ((error: string) => void) | null = null;
 
     constructor() {
         if (typeof window !== 'undefined') {
@@ -27,13 +54,13 @@ export class SpeechService {
         return !!this.recognition;
     }
 
-    start(onResult: (text: string) => void, onError?: (error: any) => void) {
+    start(onResult: (text: string) => void, onError?: (error: string) => void) {
         if (!this.recognition) return;
 
         this.onResultCallback = onResult;
         if (onError) this.onErrorCallback = onError;
 
-        this.recognition.onresult = (event: any) => {
+        this.recognition.onresult = (event: SpeechRecognitionEvent) => {
             const current = event.resultIndex;
             const transcript = event.results[current][0].transcript;
 
@@ -43,7 +70,7 @@ export class SpeechService {
             }
         };
 
-        this.recognition.onerror = (event: any) => {
+        this.recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
             // Unexpected errors
             if (event.error === 'no-speech' || event.error === 'aborted') {
                 return;
@@ -63,14 +90,14 @@ export class SpeechService {
             }
 
             console.error("Speech Recognition Error:", event.error, event);
-            this.onErrorCallback?.(event);
+            this.onErrorCallback?.(event.error);
         };
 
         this.recognition.onend = () => {
-            if (this.isListening) {
+            if (this.isListening && this.recognition) {
                 try {
                     this.recognition.start();
-                } catch (e) {
+                } catch {
                     // Already started or busy
                 }
             }
@@ -79,7 +106,7 @@ export class SpeechService {
         this.isListening = true;
         try {
             this.recognition.start();
-        } catch (e) {
+        } catch {
             console.warn("Speech recognition already active");
         }
     }
